@@ -62,7 +62,7 @@
 			  <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
 			  <li class="nav-item active"><a href="/shop" class="nav-link">shop</a></li>
 	          
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[{{Session::has('cart')? Session::get('cart')->totalQty:0}}]</a></li>
 			  <li class="nav-item active"><a href="/login" class="nav-link">Login</a></li>
 
 
@@ -154,21 +154,21 @@
 
 
   <script src="{{asset('frontend/js/jquery.min.js')}}"></script>
-  <script src="frontend/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="frontend/js/popper.min.js"></script>
-  <script src="frontend/js/bootstrap.min.js"></script>
-  <script src="frontend/js/jquery.easing.1.3.js"></script>
-  <script src="frontend/js/jquery.waypoints.min.js"></script>
-  <script src="frontend/js/jquery.stellar.min.js"></script>
-  <script src="frontend/js/owl.carousel.min.js"></script>
-  <script src="frontend/js/jquery.magnific-popup.min.js"></script>
-  <script src="frontend/js/aos.js"></script>
-  <script src="frontend/js/jquery.animateNumber.min.js"></script>
-  <script src="frontend/js/bootstrap-datepicker.js"></script>
-  <script src="frontend/js/scrollax.min.js"></script>
+  <script src="{{asset('frontend/js/jquery-migrate-3.0.1.min.js')}}"></script>
+  <script src="{{asset('frontend/js/popper.min.js')}}"></script>
+  <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('frontend/js/jquery.easing.1.3.js')}}"></script>
+  <script src="{{asset('frontend/js/jquery.waypoints.min.js')}}"></script>
+  <script src="{{asset('frontend/js/jquery.stellar.min.js')}}"></script>
+  <script src="{{asset('frontend/js/owl.carousel.min.js')}}"></script>
+  <script src="{{asset('frontend/js/jquery.magnific-popup.min.js')}}"></script>
+  <script src="{{asset('frontend/js/aos.js')}}"></script>
+  <script src="{{asset('frontend/js/jquery.animateNumber.min.js')}}"></script>
+  <script src="{{asset('frontend/js/bootstrap-datepicker.js')}}"></script>
+  <script src="{{asset('frontend/js/scrollax.min.js')}}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="frontend/js/google-map.js"></script>
-  <script src="frontend/js/main.js"></script>
+  <script src="{{asset('frontend/js/google-map.js')}}"></script>
+  <script src="{{asset('frontend/js/main.js')}}"></script>
     
   </body>
 </html>

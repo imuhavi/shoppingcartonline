@@ -27,6 +27,9 @@ Route::get('/login', [ClientController::class, 'login']);
 Route::get('/test', [AdminController::class, 'index'])->name('admin.index');
 Route::put('/products/{id}/activate', [ClientController::class, 'activate'])->name('products.activate');
 Route::put('/products/{id}/deactivate', [ClientController::class, 'deactivate'])->name('products.deactivate');
+Route::get('/products/{id}/filter', [ClientController::class, 'filter'])->name('products.filter');
+
+Route::get('/addtocart/{id}', [ClientController::class, 'addtocart'])->name('products.cart');
 
 Route::resources(['/products'=>ProductController::class,
                 '/categories' => CategoryController::class,

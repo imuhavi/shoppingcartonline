@@ -66,6 +66,7 @@ class ProductController extends Controller
                 "product_price" => $request->get('product_price'),
                 "category_id" => $request->get('category_id'),
                 "product_image" => $request->file->hashName(),
+                "status"=> 1,
             ]);
             $product->save(); // Finally, save the record.
             return redirect()->route('products.index');
