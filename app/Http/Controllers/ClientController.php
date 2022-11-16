@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Cart;
 use Session;
 use DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 
 class ClientController extends Controller
 {
@@ -32,8 +34,16 @@ class ClientController extends Controller
     //     return view('client.cart');
     // }
     public function checkout()
-    {
-        return view('client.checkout');
+    {   
+        
+
+        if (Auth::check()) {
+            // The user is logged in...
+            return view('client.checkout');
+        }
+        
+             return view('auth.login');
+        
     }
     public function login()
     {
@@ -76,12 +86,54 @@ class ClientController extends Controller
          //dd(Session::get('cart'));
         return back();
     }
-    public function cart(){
-        if(!Session::has('cart')){
-            return redirect('/cart');
+    public function update_quantity(Request $request, $id){
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->updateQty($id, $request->quantity);
+        Session::put('cart', $cart);
+
+        //dd(Session::get('cart'));
+        return back();
+    }
+    public function remove_item_from_cart($id){
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+       
+        if(count($cart->items) > 0){
+            Session::put('cart', $cart);
         }
+        else{
+            Session::forget('cart');
+        }
+
+        //dd(Session::get('cart'));
+        return back();
+    }
+    public function cart(Request $request){
+        // $data = $request->session()->all();
+        // dd($data);
+        if ($request->session()->exists('users')) {
+            //
+
+            dd('true');
+        }
+        if(!Session::has('cart')){
+            return view('client.cart');
+        }
+        
         $oldCart = Session::has('cart')? Session::get('cart'):null;
         $cart = new Cart($oldCart);
         return view('client.cart', ['products'=>$cart->items]);
+    }
+    public function customer_orders(Request $request){
+        $oldCart = Session::has('cart')? Session::get('cart'):null;
+        $cart = new Cart($oldCart);
+        $order = new Order();
+        $order->name = $request->name;
+        $order->address = $request->address;
+        $order->cart = serialize($cart);
+        $order->save();
+        Session::forget('cart');
     }
 }

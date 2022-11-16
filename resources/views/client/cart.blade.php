@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
+<div class="hero-wrap hero-bread" style="background-image: url('frontend/images/bg_1.jpg');">
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center">
         <div class="col-md-9 ftco-animate text-center">
@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-
+  @if (Session::has('cart'))
   <section class="ftco-section ftco-cart">
           <div class="container">
               <div class="row">
@@ -30,10 +30,10 @@
                           </thead>
                           <tbody>
 
-                            @if (Session::has('cart'))
+                            
                               @foreach ($products as $product)
                                   <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+                                    <td class="product-remove"><a href="{{route('remove_item_from_cart', $product['product_id'])}}"><span class="ion-ios-close"></span></a></td>
                                     
                                     <td class="image-prod"><div class="img" style="background-image:url(storage/product/{{$product['product_image']}});"></div></td>
                                     
@@ -43,24 +43,23 @@
                                     </td>
                                     
                                     <td class="price">${{$product['product_price']}}</td>
-                                    <form action="">
+                                    <form action="{{route('update_quantity',$product['product_id'])}}" method="POST">
+                                      @csrf
                                         <td class="quantity">
                                             <div class="input-group mb-3">
                                             <input type="number" name="quantity" class="quantity form-control input-number" value="{{$product['qty']}}" min="1" max="100">
-                                        </div>
+                                            </div>
+                                            <input type="submit" class="btn btn-success" value="Update">
+                                        </td>
                                     </form>
                                     
                                         
-                                  </td>
                                     
                                     <td class="total">${{$product['qty'] * $product['product_price']}}</td>
                                   </tr><!-- END TR-->
                               @endforeach
                                 
-                            @else
-                            <h2>Your Cart is empty</h2>
-                                
-                            @endif
+                           
                             
 
                             
@@ -122,10 +121,10 @@
                       <hr>
                       <p class="d-flex total-price">
                           <span>Total</span>
-                          <span>${{Session::get('cart')->totalPrice}}</span>
+                          <span>${{Session::has('cart')?Session::get('cart')->totalPrice:null}}</span>
                       </p>
                   </div>
-                  <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+                  <p><a href="{{route('checkout')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
               </div>
           </div>
           </div>
@@ -149,4 +148,8 @@
       </div>
     </div>
   </section>
+  @else
+  <h2 class="text-align-center">Your Cart is empty</h2>
+      
+  @endif
 @endsection

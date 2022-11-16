@@ -62,8 +62,19 @@
 			  <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
 			  <li class="nav-item active"><a href="/shop" class="nav-link">shop</a></li>
 	          
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[{{Session::has('cart')? Session::get('cart')->totalQty:0}}]</a></li>
-			  <li class="nav-item active"><a href="/login" class="nav-link">Login</a></li>
+	          <li class="nav-item cta cta-colored"><a href="{{route('cart.index')}}" class="nav-link"><span class="icon-shopping_cart"></span>[{{Session::has('cart')? Session::get('cart')->totalQty:0}}]</a></li>
+            @if (Auth::check()) 
+              
+            <li class="nav-item active">
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="nav-link">Logout</button></li>
+              </form>
+              
+            @else
+            <li class="nav-item active"><a href="/login" class="nav-link">Login</a></li>
+            @endif
+			  
 
 
 	        </ul>
